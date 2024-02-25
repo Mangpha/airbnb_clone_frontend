@@ -13,14 +13,14 @@ import {
 	VStack,
 } from '@chakra-ui/react';
 import { FaLock, FaUser } from 'react-icons/fa';
-import SocialLogin from './SocialLogin';
+import { SocialLogin } from './SocialLogin';
 
 interface LoginModalProps {
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
+export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<ModalOverlay />
@@ -59,5 +59,3 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
 		</Modal>
 	);
 };
-
-export default LoginModal;

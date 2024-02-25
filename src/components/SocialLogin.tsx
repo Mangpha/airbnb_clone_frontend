@@ -2,7 +2,7 @@ import { Box, Button, Divider, HStack, Text, VStack } from '@chakra-ui/react';
 import { FaGithub } from 'react-icons/fa';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 
-const SocialLogin = () => {
+export const SocialLogin = () => {
 	return (
 		<Box mb={4}>
 			<HStack my={8}>
@@ -32,5 +32,3 @@ const SocialLogin = () => {
 		</Box>
 	);
 };
-
-export default SocialLogin;

@@ -10,10 +10,10 @@ import {
 	useDisclosure,
 } from '@chakra-ui/react';
 import { FaAirbnb, FaMoon, FaSun } from 'react-icons/fa';
-import LoginModal from './LoginModal';
-import SignUpModal from './SignUp';
+import { LoginModal } from './LoginModal';
+import { SignUpModal } from './SignUp';
 
-const Header = () => {
+export const Header = () => {
 	const {
 		isOpen: isLoginOpen,
 		onClose: onLoginClose,
@@ -33,7 +33,10 @@ const Header = () => {
 			justifyContent={'space-between'}
 			alignItems={'center'}
 			py={5}
-			px={10}
+			px={{
+				base: 10,
+				lg: 40,
+			}}
 			direction={{
 				sm: 'column',
 				md: 'row',
@@ -66,5 +69,3 @@ const Header = () => {
 		</Stack>
 	);
 };
-
-export default Header;

@@ -19,7 +19,7 @@ interface IRoomComponentProps {
 	price: number;
 }
 
-const Room = ({
+export const Room = ({
 	imgUrl,
 	name,
 	rating,
@@ -43,7 +43,7 @@ const Room = ({
 				</Button>
 			</Box>
 			<Box>
-				<Grid templateColumns={'5fr 1fr'}>
+				<Grid templateColumns={'9fr 1fr'}>
 					<Text as={'b'} noOfLines={1} fontSize={'md'}>
 						{name}
 					</Text>
@@ -62,5 +62,3 @@ const Room = ({
 		</VStack>
 	);
 };
-
-export default Room;

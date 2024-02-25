@@ -1,6 +1,6 @@
 import { Box, HStack, Skeleton } from '@chakra-ui/react';
 
-const RoomSkeleton = () => {
+export const RoomSkeleton = () => {
 	return (
 		<Box>
 			<Skeleton rounded={'2xl'} height={'280px'} mb={7} />
@@ -14,4 +14,3 @@ const RoomSkeleton = () => {
 		</Box>
 	);
 };
-export default RoomSkeleton;

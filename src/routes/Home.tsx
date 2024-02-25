@@ -1,7 +1,8 @@
 import { Grid } from '@chakra-ui/react';
-import RoomSkeleton from '../components/RoomSkeleton';
-import { useEffect, useState } from 'react';
-import Room from '../components/Room';
+import { RoomSkeleton } from '../components/RoomSkeleton';
+import { Room } from '../components/Room';
+import { useQuery } from '@tanstack/react-query';
+import { getRooms } from '../api';
 
 interface IPhoto {
 	pk: number;
@@ -20,18 +21,11 @@ interface IRoom {
 	photos: IPhoto[];
 }
 
-const Home = () => {
-	const [isLoading, setIsLoading] = useState(true);
-	const [rooms, setRooms] = useState<IRoom[]>([]);
-	const fetchRooms = async () => {
-		const response = await fetch('http://localhost:8000/api/v1/rooms/');
-		const json = await response.json();
-		setRooms(json);
-		setIsLoading(false);
-	};
-	useEffect(() => {
-		fetchRooms();
-	}, []);
+export const Home = () => {
+	const { isLoading, data } = useQuery<IRoom[]>({
+		queryKey: ['rooms'],
+		queryFn: getRooms,
+	});
 
 	return (
 		<Grid
@@ -67,7 +61,7 @@ const Home = () => {
 					<RoomSkeleton />
 				</>
 			) : null}
-			{rooms.map((room) => (
+			{data?.map((room) => (
 				<Room
 					imgUrl={room.photos[0].file}
 					name={room.name}
@@ -80,5 +74,3 @@ const Home = () => {
 		</Grid>
 	);
 };
-
-export default Home;

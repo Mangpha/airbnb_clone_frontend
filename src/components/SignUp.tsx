@@ -14,14 +14,14 @@ import {
 } from '@chakra-ui/react';
 import { FaEnvelope, FaLock, FaUser } from 'react-icons/fa';
 import { MdDriveFileRenameOutline } from 'react-icons/md';
-import SocialLogin from './SocialLogin';
+import { SocialLogin } from './SocialLogin';
 
 interface SignUpModalProps {
 	isOpen: boolean;
 	onClose: () => void;
 }
 
-const SignUpModal = ({ isOpen, onClose }: SignUpModalProps) => {
+export const SignUpModal = ({ isOpen, onClose }: SignUpModalProps) => {
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<ModalOverlay />
@@ -80,5 +80,3 @@ const SignUpModal = ({ isOpen, onClose }: SignUpModalProps) => {
 		</Modal>
 	);
 };
-
-export default SignUpModal;
