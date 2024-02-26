@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const instance = axios.create({
 	baseURL: 'http://localhost:8000/api/v1/',
+	withCredentials: true,
 });
 
 export const getRooms = async () => {
@@ -36,4 +37,4 @@ export const getRoomReviews = async ({ queryKey }: QueryFunctionContext) => {
 	}
 };
 
-export const getMe = async () => (await instance.get('users/me')).data;
+export const getMe = async () => (await instance.get('users/me/')).data;
