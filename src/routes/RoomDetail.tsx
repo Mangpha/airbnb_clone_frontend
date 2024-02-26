@@ -5,6 +5,7 @@ import { IRoomDetail, IRoomReview } from '../types';
 import {
 	Avatar,
 	Box,
+	Container,
 	Grid,
 	GridItem,
 	HStack,
@@ -95,7 +96,7 @@ export const RoomDetail = () => {
 			</HStack>
 			<Box mt={10}>
 				<Skeleton isLoaded={!reviewsDataLoading} w={'15%'}>
-					<Heading fontSize={'2xl'}>
+					<Heading mb={8} fontSize={'2xl'}>
 						<HStack>
 							<FaStar />
 							<Text>{roomData?.rating}</Text>
@@ -107,6 +108,29 @@ export const RoomDetail = () => {
 						</HStack>
 					</Heading>
 				</Skeleton>
+				<Container my={15} maxW={'container.lg'} marginX={'none'}>
+					<Grid gap={10} templateColumns={'1fr 1fr'}>
+						{reviewsData?.map((review, idx) => (
+							<VStack key={idx} alignItems={'flex-start'}>
+								<HStack>
+									<Avatar
+										name={review.user.name}
+										src={review.user.avatar}
+										size={'md'}
+									/>
+									<VStack spacing={0} alignItems={'flex-start'}>
+										<Heading fontSize={'md'}>{review.user.name}</Heading>
+										<HStack spacing={2}>
+											<FaStar size={'12px'} />
+											<Text>{review.rating}</Text>
+										</HStack>
+									</VStack>
+								</HStack>
+								<Text>{review.payload}</Text>
+							</VStack>
+						))}
+					</Grid>
+				</Container>
 			</Box>
 		</Box>
 	);
