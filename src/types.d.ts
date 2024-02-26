@@ -20,6 +20,12 @@ export interface IRoomOwner {
 	username: string;
 }
 
+export interface IRoomReview {
+	user: IRoomOwner;
+	payload: string;
+	rating: number;
+}
+
 export interface IAmenity {
 	name: string;
 	description: string;
