@@ -3,26 +3,10 @@ import { RoomSkeleton } from '../components/RoomSkeleton';
 import { Room } from '../components/Room';
 import { useQuery } from '@tanstack/react-query';
 import { getRooms } from '../api';
-
-interface IPhoto {
-	pk: number;
-	file: string;
-	description: string;
-}
-
-interface IRoom {
-	pk: number;
-	name: string;
-	country: string;
-	city: string;
-	price: number;
-	rating: number;
-	is_owner: boolean;
-	photos: IPhoto[];
-}
+import { IRoomList } from '../types';
 
 export const Home = () => {
-	const { isLoading, data } = useQuery<IRoom[]>({
+	const { isLoading, data } = useQuery<IRoomList[]>({
 		queryKey: ['rooms'],
 		queryFn: getRooms,
 	});

@@ -15,7 +15,7 @@ export const getRoom = ({ queryKey }: QueryFunctionContext) => {
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const [_, roomPk] = queryKey;
 	return instance
-		.get(`rooms/${roomPk}`)
+		.get(`rooms/${roomPk}/`)
 		.then((res) => res.data)
 		.catch((err) => console.log(err));
 };
