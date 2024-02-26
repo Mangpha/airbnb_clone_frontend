@@ -12,6 +12,7 @@ import {
 import { FaAirbnb, FaMoon, FaSun } from 'react-icons/fa';
 import { LoginModal } from './LoginModal';
 import { SignUpModal } from './SignUp';
+import { Link } from 'react-router-dom';
 
 export const Header = () => {
 	const {
@@ -47,9 +48,11 @@ export const Header = () => {
 			}}
 			borderBottomWidth={1}
 		>
-			<Box color={logoColor}>
-				<FaAirbnb size={48} />
-			</Box>
+			<Link to={'/'}>
+				<Box color={logoColor}>
+					<FaAirbnb size={48} />
+				</Box>
+			</Link>
 			<HStack spacing={2}>
 				<IconButton
 					onClick={toggleColorMode}

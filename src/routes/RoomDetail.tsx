@@ -5,9 +5,9 @@ import { getRoom } from '../api';
 export const RoomDetail = () => {
 	const { roomPk } = useParams();
 	const { isLoading, data } = useQuery({
-		queryKey: [`room:${roomPk}`],
+		queryKey: ['rooms', roomPk],
 		queryFn: getRoom,
 	});
-	console.log(data);
-	return <>Hello</>;
+
+	return <h1>Hello</h1>;
 };
