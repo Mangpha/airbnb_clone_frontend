@@ -1,4 +1,5 @@
 import {
+	Avatar,
 	Box,
 	Button,
 	HStack,
@@ -13,8 +14,10 @@ import { FaAirbnb, FaMoon, FaSun } from 'react-icons/fa';
 import { LoginModal } from './LoginModal';
 import { SignUpModal } from './SignUp';
 import { Link } from 'react-router-dom';
+import { useUser } from '../lib/useUser';
 
 export const Header = () => {
+	const { userLoading, isLoggedIn, user } = useUser();
 	const {
 		isOpen: isLoginOpen,
 		onClose: onLoginClose,
@@ -60,12 +63,20 @@ export const Header = () => {
 					aria-label="Toggle dark mode"
 					icon={<Icon />}
 				/>
-				<Button onClick={onLoginOpen}>Log In</Button>
-				<LightMode>
-					<Button onClick={onSignUpOpen} colorScheme="red">
-						Sign Up
-					</Button>
-				</LightMode>
+				{!userLoading ? (
+					!isLoggedIn ? (
+						<>
+							<Button onClick={onLoginOpen}>Log In</Button>
+							<LightMode>
+								<Button onClick={onSignUpOpen} colorScheme="red">
+									Sign Up
+								</Button>
+							</LightMode>
+						</>
+					) : (
+						<Avatar size={'md'} />
+					)
+				) : null}
 			</HStack>
 			<LoginModal isOpen={isLoginOpen} onClose={onLoginClose} />
 			<SignUpModal isOpen={isSignUpOpen} onClose={onSignUpClose} />
