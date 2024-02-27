@@ -48,3 +48,16 @@ export const logOut = async () =>
 			},
 		})
 	).data;
+
+export const githubLogin = async (code: string) =>
+	(
+		await instance.post(
+			'users/github',
+			{ code },
+			{
+				headers: {
+					'X-CSRFToken': Cookie.get('csrftoken') || '',
+				},
+			}
+		)
+	).status;
