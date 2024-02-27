@@ -21,6 +21,7 @@ import { SignUpModal } from './SignUp';
 import { Link } from 'react-router-dom';
 import { useUser } from '../lib/useUser';
 import { logOut } from '../api';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const Header = () => {
 	const { userLoading, isLoggedIn, user } = useUser();
@@ -38,12 +39,17 @@ export const Header = () => {
 	const logoColor = useColorModeValue('red.500', 'red.200');
 	const Icon = useColorModeValue(FaMoon, FaSun);
 	const toast = useToast();
+	const queryClient = useQueryClient();
 	const onLogOut = async () => {
 		const toastId = toast({
 			title: 'Loading...',
 			status: 'loading',
 			isClosable: true,
 			position: 'top',
+		});
+		await logOut();
+		queryClient.refetchQueries({
+			queryKey: ['me'],
 		});
 		toast.update(toastId, {
 			status: 'success',

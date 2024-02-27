@@ -1,4 +1,5 @@
 import { QueryFunctionContext } from '@tanstack/react-query';
+import Cookie from 'js-cookie';
 import axios from 'axios';
 
 const instance = axios.create({
@@ -39,4 +40,11 @@ export const getRoomReviews = async ({ queryKey }: QueryFunctionContext) => {
 
 export const getMe = async () => (await instance.get('users/me/')).data;
 
-export const logOut = async () => (await instance.post('users/logout/')).data;
+export const logOut = async () =>
+	(
+		await instance.post('users/logout/', null, {
+			headers: {
+				'X-CSRFToken': Cookie.get('csrftoken') || '',
+			},
+		})
+	).data;
