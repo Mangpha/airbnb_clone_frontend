@@ -38,3 +38,5 @@ export const getRoomReviews = async ({ queryKey }: QueryFunctionContext) => {
 };
 
 export const getMe = async () => (await instance.get('users/me/')).data;
+
+export const logOut = async () => (await instance.post('users/logout/')).data;
