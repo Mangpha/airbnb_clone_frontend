@@ -18,7 +18,15 @@ export const SocialLogin = () => {
 				<Divider />
 			</HStack>
 			<VStack>
-				<Button w={'100%'} leftIcon={<FaGithub />} colorScheme={'blue'}>
+				<Button
+					as={'a'}
+					href={
+						'https://github.com/login/oauth/authorize?client_id=eeaab2f46b563afbd1bb&scope=read:user,user:email'
+					}
+					w={'100%'}
+					leftIcon={<FaGithub />}
+					colorScheme={'blue'}
+				>
 					Continue with Github
 				</Button>
 				<Button
