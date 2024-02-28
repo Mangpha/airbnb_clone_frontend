@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { FaLock, FaUser } from 'react-icons/fa';
 import { SocialLogin } from './SocialLogin';
+import React, { useState } from 'react';
 
 interface LoginModalProps {
 	isOpen: boolean;
@@ -21,13 +22,25 @@ interface LoginModalProps {
 }
 
 export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
+	const [username, setUsername] = useState('');
+	const [password, setPassword] = useState('');
+	const onChange = (event: React.SyntheticEvent<HTMLInputElement>) => {
+		const { name, value } = event.currentTarget;
+		if (name === 'username') setUsername(value);
+		else if (name === 'password') setPassword(value);
+	};
+	const onSubmit = (event: React.SyntheticEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		console.log(username, password);
+	};
+
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
 			<ModalOverlay />
 			<ModalContent>
 				<ModalHeader>Log In</ModalHeader>
 				<ModalCloseButton />
-				<ModalBody>
+				<ModalBody as={'form'} onSubmit={onSubmit as any}>
 					<VStack>
 						<InputGroup>
 							<InputLeftElement
@@ -37,7 +50,14 @@ export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
 									</Box>
 								}
 							/>
-							<Input variant={'filled'} placeholder="Username" />
+							<Input
+								required
+								name={'username'}
+								value={username}
+								onChange={onChange}
+								variant={'filled'}
+								placeholder="Username"
+							/>
 						</InputGroup>
 						<InputGroup>
 							<InputLeftElement
@@ -47,10 +67,18 @@ export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
 									</Box>
 								}
 							/>
-							<Input variant={'filled'} placeholder="Password" />
+							<Input
+								required
+								name={'password'}
+								value={password}
+								onChange={onChange}
+								variant={'filled'}
+								type={'password'}
+								placeholder="Password"
+							/>
 						</InputGroup>
 					</VStack>
-					<Button mt={4} w={'100%'} colorScheme="red">
+					<Button type={'submit'} mt={4} w={'100%'} colorScheme="red">
 						Log In
 					</Button>
 					<SocialLogin />

@@ -31,6 +31,7 @@ export const KakaoConfirm = () => {
 	};
 	useEffect(() => {
 		confirmLogin();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
 		<VStack justifyContent={'center'} mt={60}>
