@@ -3,7 +3,7 @@ import Root from './components/Root';
 import { Home } from './routes/Home';
 import { NotFound } from './routes/NotFound';
 import { RoomDetail } from './routes/RoomDetail';
-import { GithubConfirm } from './routes/GIthubConfirm';
+import { GithubConfirm } from './routes/GithubConfirm';
 
 export const router = createBrowserRouter([
 	{
