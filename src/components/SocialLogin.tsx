@@ -3,6 +3,11 @@ import { FaGithub } from 'react-icons/fa';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 
 export const SocialLogin = () => {
+	const kakaoParams = new URLSearchParams({
+		client_id: '3ae32aa685159dd0cceb7bd786d13f10',
+		redirect_uri: 'http://localhost:3000/social/kakao',
+		response_type: 'code',
+	}).toString();
 	return (
 		<Box mb={4}>
 			<HStack my={8}>
@@ -30,6 +35,8 @@ export const SocialLogin = () => {
 					Continue with Github
 				</Button>
 				<Button
+					as={'a'}
+					href={`https://kauth.kakao.com/oauth/authorize?${kakaoParams}`}
 					w={'100%'}
 					leftIcon={<RiKakaoTalkFill />}
 					colorScheme={'yellow'}
