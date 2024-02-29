@@ -52,7 +52,7 @@ export const logOut = async () =>
 export const githubLogin = async (code: string) =>
 	(
 		await instance.post(
-			'users/github',
+			'users/github/',
 			{ code },
 			{
 				headers: {
@@ -65,7 +65,7 @@ export const githubLogin = async (code: string) =>
 export const kakaoLogin = async (code: string) =>
 	(
 		await instance.post(
-			'users/kakao',
+			'users/kakao/',
 			{ code },
 			{
 				headers: {
@@ -74,3 +74,28 @@ export const kakaoLogin = async (code: string) =>
 			}
 		)
 	).status;
+
+export interface ICommonLogin {
+	username: string;
+	password: string;
+}
+
+export interface ICommonLoginSuccess {
+	ok: string;
+}
+export interface ICommonLoginFail {
+	error: string;
+}
+
+export const commonLogin = ({ username, password }: ICommonLogin) =>
+	instance
+		.post(
+			'users/login/',
+			{ username, password },
+			{
+				headers: {
+					'X-CSRFToken': Cookie.get('csrftoken') || '',
+				},
+			}
+		)
+		.then((res) => res.data);

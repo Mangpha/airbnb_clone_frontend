@@ -10,21 +10,23 @@ import {
 	ModalContent,
 	ModalHeader,
 	ModalOverlay,
-	Text,
 	VStack,
+	useToast,
 } from '@chakra-ui/react';
 import { FaLock, FaUser } from 'react-icons/fa';
 import { SocialLogin } from './SocialLogin';
 import { useForm } from 'react-hook-form';
+import {
+	ICommonLogin,
+	ICommonLoginFail,
+	ICommonLoginSuccess,
+	commonLogin,
+} from '../api';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 interface LoginModalProps {
 	isOpen: boolean;
 	onClose: () => void;
-}
-
-interface ILoginForm {
-	username: string;
-	password: string;
 }
 
 export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
@@ -32,9 +34,37 @@ export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<ILoginForm>();
-	const onSubmit = (data: ILoginForm) => {
-		console.log('submitted');
+	} = useForm<ICommonLogin>();
+	const toast = useToast();
+	const queryClient = useQueryClient();
+	const mutation = useMutation<
+		ICommonLoginSuccess,
+		ICommonLoginFail,
+		ICommonLogin
+	>({
+		mutationFn: commonLogin,
+		onMutate: () => {
+			console.log('mutation starting');
+		},
+		onSuccess: (data) => {
+			toast({
+				title: 'Welcome',
+				description: 'welcome back.',
+				position: 'top',
+				isClosable: true,
+				status: 'success',
+			});
+			onClose();
+			queryClient.refetchQueries({
+				queryKey: ['me'],
+			});
+		},
+		onError: (error) => {
+			console.log('mutation error');
+		},
+	});
+	const onSubmit = ({ username, password }: ICommonLogin) => {
+		mutation.mutate({ username, password });
 	};
 	return (
 		<Modal isOpen={isOpen} onClose={onClose}>
@@ -80,7 +110,13 @@ export const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
 							/>
 						</InputGroup>
 					</VStack>
-					<Button type={'submit'} mt={4} w={'100%'} colorScheme="red">
+					<Button
+						isLoading={mutation.isPending}
+						type={'submit'}
+						mt={4}
+						w={'100%'}
+						colorScheme="red"
+					>
 						Log In
 					</Button>
 					<SocialLogin />
