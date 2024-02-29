@@ -118,6 +118,11 @@ export const Header = () => {
 								<Avatar name={user?.name} src={user?.avatar} size={'md'} />
 							</MenuButton>
 							<MenuList>
+								{user?.is_host && (
+									<Link to={'/rooms/upload'}>
+										<MenuItem>Hosting Room</MenuItem>
+									</Link>
+								)}
 								<MenuItem onClick={onLogOut}>Log Out</MenuItem>
 							</MenuList>
 						</Menu>

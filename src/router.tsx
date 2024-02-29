@@ -5,6 +5,7 @@ import { NotFound } from './routes/NotFound';
 import { RoomDetail } from './routes/RoomDetail';
 import { GithubConfirm } from './routes/GithubConfirm';
 import { KakaoConfirm } from './routes/KakaoConfirm';
+import { HostingRoom } from './routes/HostingRoom';
 
 export const router = createBrowserRouter([
 	{
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
 			{
 				path: '',
 				element: <Home />,
+			},
+			{
+				path: 'rooms/upload',
+				element: <HostingRoom />,
 			},
 			{
 				path: 'rooms/:roomPk',

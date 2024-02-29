@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getRoom, getRoomReviews } from '../api';
 import { IRoomDetail, IRoomReview } from '../types';
 import {
@@ -16,19 +16,27 @@ import {
 	VStack,
 } from '@chakra-ui/react';
 import { FaStar } from 'react-icons/fa';
+import { useEffect } from 'react';
 
 export const RoomDetail = () => {
 	const { roomPk } = useParams();
+	const navigate = useNavigate();
 	const { isLoading: roomDataLoading, data: roomData } = useQuery<IRoomDetail>({
 		queryKey: ['rooms', roomPk],
 		queryFn: getRoom,
 	});
-	const { isLoading: reviewsDataLoading, data: reviewsData } = useQuery<
-		IRoomReview[]
-	>({
+	const {
+		isLoading: reviewsDataLoading,
+		data: reviewsData,
+		isError,
+	} = useQuery<IRoomReview[]>({
 		queryKey: ['rooms', roomPk, 'reviews'],
 		queryFn: getRoomReviews,
 	});
+
+	useEffect(() => {
+		if (isError) navigate('/404');
+	}, [isError, navigate]);
 
 	return (
 		<Box
