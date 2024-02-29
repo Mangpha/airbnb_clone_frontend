@@ -1,10 +1,12 @@
 import {
 	Box,
+	Button,
 	Checkbox,
 	Container,
 	FormControl,
 	FormHelperText,
 	FormLabel,
+	Grid,
 	Heading,
 	Input,
 	InputGroup,
@@ -16,8 +18,24 @@ import {
 import { useHostOnlyPage } from '../components/HostOnlyPage';
 import { ProtectedPage } from '../components/ProtectedPage';
 import { FaBed, FaDollarSign, FaToilet } from 'react-icons/fa';
+import { useQuery } from '@tanstack/react-query';
+import { getAmenities, getCategories } from '../api';
+import { IAmenity, ICategory } from '../types';
 
 export const HostingRoom = () => {
+	const { data: amenitiesData, isLoading: amenitiesLoading } = useQuery<
+		IAmenity[]
+	>({
+		queryKey: ['amenities'],
+		queryFn: getAmenities,
+	});
+	const { data: categoriesData, isLoading: categoriesLoading } = useQuery<
+		ICategory[]
+	>({
+		queryKey: ['categories'],
+		queryFn: getCategories,
+	});
+
 	useHostOnlyPage();
 	return (
 		<ProtectedPage>
@@ -31,7 +49,7 @@ export const HostingRoom = () => {
 			>
 				<Container>
 					<Heading textAlign={'center'}>Hosting Room</Heading>
-					<VStack spacing={5} as={'form'} mt={5}>
+					<VStack spacing={10} as={'form'} mt={5}>
 						<FormControl>
 							<FormLabel>Name</FormLabel>
 							<Input required type={'text'} />
@@ -88,6 +106,33 @@ export const HostingRoom = () => {
 								What kind of room are you renting?
 							</FormHelperText>
 						</FormControl>
+						<FormControl>
+							<FormLabel>Category</FormLabel>
+							<Select placeholder={'Choose a kind'}>
+								{categoriesData?.map((category, idx) => (
+									<option key={category.pk} value={category.pk}>
+										{category.name}
+									</option>
+								))}
+							</Select>
+							<FormHelperText>
+								What category describes your room?
+							</FormHelperText>
+						</FormControl>
+						<FormControl>
+							<FormLabel>Amenities</FormLabel>
+							<Grid templateColumns={'1fr 1fr'} gap={5}>
+								{amenitiesData?.map((amenity, idx) => (
+									<Box key={amenity.pk}>
+										<Checkbox>{amenity.name}</Checkbox>
+										<FormHelperText>{amenity.description}</FormHelperText>
+									</Box>
+								))}
+							</Grid>
+						</FormControl>
+						<Button colorScheme={'red'} size={'lg'} w={'100%'}>
+							Hosting Room!
+						</Button>
 					</VStack>
 				</Container>
 			</Box>

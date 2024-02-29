@@ -99,3 +99,9 @@ export const commonLogin = ({ username, password }: ICommonLogin) =>
 			}
 		)
 		.then((res) => res.data);
+
+export const getAmenities = () =>
+	instance.get('rooms/amenities/').then((res) => res.data);
+
+export const getCategories = () =>
+	instance.get('categories/').then((res) => res.data);

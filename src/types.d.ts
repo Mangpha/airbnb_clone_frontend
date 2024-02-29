@@ -27,11 +27,13 @@ export interface IRoomReview {
 }
 
 export interface IAmenity {
+	pk: number;
 	name: string;
 	description: string;
 }
 
 export interface ICategory {
+	pk: number;
 	name: string;
 	kind: string;
 }
