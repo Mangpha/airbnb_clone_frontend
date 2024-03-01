@@ -105,3 +105,25 @@ export const getAmenities = () =>
 
 export const getCategories = () =>
 	instance.get('categories/').then((res) => res.data);
+
+export interface IHostRoomVar {
+	name: string;
+	country: string;
+	city: string;
+	price: number;
+	rooms: number;
+	toilets: number;
+	description: string;
+	address: string;
+	pet_friendly: boolean;
+	kind: string;
+	amenities: number[];
+	category: number;
+}
+
+export const hostRoom = (variables: IHostRoomVar) =>
+	instance.post(`rooms/`, variables, {
+		headers: {
+			'X-CSRFToken': Cookie.get('csrftoken') || '',
+		},
+	});
