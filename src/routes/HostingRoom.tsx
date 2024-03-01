@@ -22,11 +22,13 @@ import { ProtectedPage } from '../components/ProtectedPage';
 import { FaBed, FaDollarSign, FaToilet } from 'react-icons/fa';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { IHostRoomVar, getAmenities, getCategories, hostRoom } from '../api';
-import { IAmenity, ICategory } from '../types';
+import { IAmenity, ICategory, IRoomDetail } from '../types';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 
 export const HostingRoom = () => {
 	const toast = useToast();
+	const navigate = useNavigate();
 	const { data: amenitiesData, isLoading: amenitiesLoading } = useQuery<
 		IAmenity[]
 	>({
@@ -43,13 +45,14 @@ export const HostingRoom = () => {
 	const { register, handleSubmit } = useForm<IHostRoomVar>();
 	const mutation = useMutation({
 		mutationFn: hostRoom,
-		onSuccess: () => {
+		onSuccess: (data: IRoomDetail) => {
 			toast({
 				status: 'success',
 				title: 'Room created.',
 				position: 'top',
 				isClosable: true,
 			});
+			navigate(`/rooms/${data.pk}`);
 		},
 	});
 	const onSubmit = (data: IHostRoomVar) => {

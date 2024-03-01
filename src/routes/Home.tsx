@@ -49,7 +49,7 @@ export const Home = () => {
 				<Room
 					key={room.pk}
 					pk={room.pk}
-					imgUrl={room.photos[0].file}
+					imgUrl={room.photos[0]?.file}
 					name={room.name}
 					rating={room.rating}
 					city={room.city}

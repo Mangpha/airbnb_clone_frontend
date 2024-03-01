@@ -66,12 +66,14 @@ export const RoomDetail = () => {
 					>
 						{roomData?.photos[idx] ? (
 							<Skeleton isLoaded={!roomDataLoading} h={'100%'} w={'100%'}>
-								<Image
-									w={'100%'}
-									h={'100%'}
-									objectFit={'cover'}
-									src={roomData?.photos[idx]?.file}
-								/>
+								{roomData.photos && roomData.photos.length > 0 ? (
+									<Image
+										w={'100%'}
+										h={'100%'}
+										objectFit={'cover'}
+										src={roomData?.photos[idx]?.file}
+									/>
+								) : null}
 							</Skeleton>
 						) : null}
 					</GridItem>

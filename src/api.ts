@@ -122,8 +122,10 @@ export interface IHostRoomVar {
 }
 
 export const hostRoom = (variables: IHostRoomVar) =>
-	instance.post(`rooms/`, variables, {
-		headers: {
-			'X-CSRFToken': Cookie.get('csrftoken') || '',
-		},
-	});
+	instance
+		.post(`rooms/`, variables, {
+			headers: {
+				'X-CSRFToken': Cookie.get('csrftoken') || '',
+			},
+		})
+		.then((res) => res.data);
