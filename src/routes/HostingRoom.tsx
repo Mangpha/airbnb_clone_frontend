@@ -29,15 +29,11 @@ import { useNavigate } from 'react-router-dom';
 export const HostingRoom = () => {
 	const toast = useToast();
 	const navigate = useNavigate();
-	const { data: amenitiesData, isLoading: amenitiesLoading } = useQuery<
-		IAmenity[]
-	>({
+	const { data: amenitiesData } = useQuery<IAmenity[]>({
 		queryKey: ['amenities'],
 		queryFn: getAmenities,
 	});
-	const { data: categoriesData, isLoading: categoriesLoading } = useQuery<
-		ICategory[]
-	>({
+	const { data: categoriesData } = useQuery<ICategory[]>({
 		queryKey: ['categories'],
 		queryFn: getCategories,
 	});
