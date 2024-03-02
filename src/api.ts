@@ -129,3 +129,12 @@ export const hostRoom = (variables: IHostRoomVar) =>
 			},
 		})
 		.then((res) => res.data);
+
+export const getUploadURL = () =>
+	instance
+		.post(`medias/photos/get-url`, null, {
+			headers: {
+				'X-CSRFToken': Cookie.get('csrftoken') || '',
+			},
+		})
+		.then((res) => res.data);
