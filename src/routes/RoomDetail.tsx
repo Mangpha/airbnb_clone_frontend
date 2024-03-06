@@ -1,10 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getRoom, getRoomReviews } from '../api';
+import { checkBooking, getRoom, getRoomReviews } from '../api';
 import { IRoomDetail, IRoomReview } from '../types';
 import {
 	Avatar,
 	Box,
+	Button,
 	Container,
 	Grid,
 	GridItem,
@@ -36,18 +37,26 @@ export const RoomDetail = () => {
 		queryFn: getRoomReviews,
 	});
 	const [dates, setDates] = useState<Value>(new Date());
-
-	useEffect(() => {
+	const isDatesValid = () => {
 		if (dates) {
-			const [firstDate, secondDate] = dates
+			const [check_in, check_out] = dates
 				.toString()
 				.split(',')
 				.map((date) => {
 					const [check] = new Date(date).toJSON().split('T');
 					return check;
 				});
+			return check_in !== undefined && check_out !== undefined;
 		}
-	}, [dates]);
+		return false;
+	};
+	const { data: checkBookingDates, isLoading: isCheckBookingDates } = useQuery({
+		queryKey: ['check', roomPk, dates],
+		queryFn: checkBooking,
+		enabled: isDatesValid(),
+		gcTime: 0,
+	});
+	console.log(checkBookingDates?.ok, isCheckBookingDates);
 
 	return (
 		<Box
@@ -166,6 +175,21 @@ export const RoomDetail = () => {
 						maxDate={new Date(Date.now() + 60 * 60 * 24 * 7 * 4 * 6 * 1000)}
 						selectRange
 					/>
+					<Button
+						isLoading={isCheckBookingDates}
+						isDisabled={
+							!checkBookingDates?.ok || checkBookingDates !== undefined
+						}
+						my={5}
+						w={'100%'}
+						colorScheme={'red'}
+					>
+						Make Booking
+					</Button>
+					{!checkBookingDates?.ok ||
+					(checkBookingDates !== undefined && !isCheckBookingDates) ? (
+						<Text color={'red.500'}>Can't book on those dates</Text>
+					) : null}
 				</Box>
 			</Grid>
 		</Box>

@@ -178,3 +178,26 @@ export const createPhoto = ({
 			}
 		)
 		.then((res) => res.data);
+
+type ValuePiece = Date | null;
+type Value = ValuePiece | [ValuePiece, ValuePiece];
+
+export const checkBooking = ({
+	queryKey,
+}: QueryFunctionContext<[string, string?, Value?]>) => {
+	const [_, roomPk, dates] = queryKey;
+	if (dates) {
+		const [check_in, check_out] = dates
+			.toString()
+			.split(',')
+			.map((date) => {
+				const [check] = new Date(date).toJSON().split('T');
+				return check;
+			});
+		return instance
+			.get(
+				`rooms/${roomPk}/bookings/check?check_in=${check_in}&check_out=${check_out}`
+			)
+			.then((res) => res.data);
+	}
+};
