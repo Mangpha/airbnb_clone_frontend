@@ -138,3 +138,43 @@ export const getUploadURL = () =>
 			},
 		})
 		.then((res) => res.data);
+
+export interface IUploadImageVariables {
+	file: FileList;
+	uploadUrl: string;
+}
+
+export const uploadImage = ({ file, uploadUrl }: IUploadImageVariables) => {
+	const form = new FormData();
+	form.append('file', file[0]);
+	return axios
+		.post(uploadUrl, form, {
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+		})
+		.then((res) => res.data);
+};
+
+export interface ICreatePhotoVariables {
+	description: string;
+	file: string;
+	roomPk: string;
+}
+
+export const createPhoto = ({
+	description,
+	file,
+	roomPk,
+}: ICreatePhotoVariables) =>
+	instance
+		.post(
+			`rooms/${roomPk}/photos/`,
+			{ description, file },
+			{
+				headers: {
+					'X-CSRFToken': Cookie.get('csrftoken') || '',
+				},
+			}
+		)
+		.then((res) => res.data);
