@@ -44,7 +44,13 @@ export const Room = ({
 		<Link to={`/rooms/${pk}`}>
 			<VStack alignItems={'flex-start'}>
 				<Box position={'relative'} overflow={'hidden'} mb={2} rounded={'3xl'}>
-					<Image minH={280} src={imgUrl} />
+					<Image
+						objectFit={'cover'}
+						minH={280}
+						src={imgUrl}
+						maxH={280}
+						minW={250}
+					/>
 					<Button
 						variant={'unstyled'}
 						position={'absolute'}
