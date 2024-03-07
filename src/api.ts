@@ -191,7 +191,10 @@ export const checkBooking = ({
 			.toString()
 			.split(',')
 			.map((date) => {
-				const [check] = new Date(date).toJSON().split('T');
+				const setDate = new Date(date);
+				const check = `${setDate.getFullYear()}-${
+					setDate.getMonth() + 1
+				}-${setDate.getDate()}`;
 				return check;
 			});
 		return instance
