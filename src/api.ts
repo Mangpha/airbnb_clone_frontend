@@ -3,7 +3,10 @@ import Cookie from 'js-cookie';
 import axios from 'axios';
 
 const instance = axios.create({
-	baseURL: 'http://localhost:8000/api/v1/',
+	baseURL:
+		process.env.NODE_ENV === 'development'
+			? 'http://localhost:8000/api/v1/'
+			: 'https://airbnbclone-5rb6.onrender.com/api/v1/',
 	withCredentials: true,
 });
 
